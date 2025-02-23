@@ -1,0 +1,10 @@
+09:38:45 **** Incremental Build of configuration Debug for project GPIOOutputControl ****
+make -j8 all 
+arm-none-eabi-size  GPIOOutputControl.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13892	     96	  18088	  32076	   7d4c	GPIOOutputControl.elf
+Finished building: default.size.stdout
+ 
+
+09:38:45 Build Finished. 0 errors, 0 warnings. (took 352ms)
+
