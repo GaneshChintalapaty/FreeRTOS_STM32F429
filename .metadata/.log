@@ -141,3 +141,6 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.debug.launch 2 0 2025-02-23 09:35:42.571
 !MESSAGE Won't launch debug session since we failed to locate the binary.
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-02-23 10:11:00.122
+!MESSAGE Indexed 'USARTWrite' (19 sources, 81 headers) in 2.24 sec: 4,627 declarations; 20,738 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.0079%)
