@@ -19,6 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "stdio.h"
+#include "string.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -248,12 +250,19 @@ static void MX_USART1_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+
+  /*Configure GPIO pin : BTN_Pin */
+  GPIO_InitStruct.Pin = BTN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(BTN_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -276,7 +285,16 @@ void startNormalTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	  char *str1 = "Entered NormalTask and waiting for semaphore\r\n";
+	  HAL_UART_Transmit(&huart1, (uint8_t *) str1, strlen(str1), 100);
+	  osSemaphoreWait(BinSemHandle, osWaitForever);
+	  char *str3 = "Semaphore acquired by NormalTask\r\n";
+	  HAL_UART_Transmit(&huart1, (uint8_t *) str3, strlen(str3), 100);
+	  while(!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0));	//Wait for btn input
+	  char *str2 = "Leaving NormalTask and releasing Semaphore\r\n";
+	  HAL_UART_Transmit(&huart1, (uint8_t *) str2, strlen(str2), 100);
+	  osSemaphoreRelease(BinSemHandle);
+	  osDelay(500);
   }
   /* USER CODE END 5 */
 }
@@ -294,7 +312,15 @@ void startHighTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	  char *str1 = "Entered HighTask and waiting for semaphore\r\n";
+	  HAL_UART_Transmit(&huart1, (uint8_t *) str1, strlen(str1), 100);
+	  osSemaphoreWait(BinSemHandle, osWaitForever);
+	  char *str3 = "Semaphore acquired by HighTask\r\n";
+	  HAL_UART_Transmit(&huart1, (uint8_t *) str3, strlen(str3), 100);
+	  char *str2 = "Leaving HighTask and releasing Semaphore\r\n";
+	  HAL_UART_Transmit(&huart1, (uint8_t *) str2, strlen(str2), 100);
+	  osSemaphoreRelease(BinSemHandle);
+	  osDelay(500);
   }
   /* USER CODE END startHighTask */
 }
@@ -312,7 +338,11 @@ void startLowTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	  char *str1 = "Entered LowTask\r\n";
+	  HAL_UART_Transmit(&huart1, (uint8_t *) str1, strlen(str1), 100);
+	  char *str2 = "Leaving LowTask\r\n";
+	  HAL_UART_Transmit(&huart1, (uint8_t *) str2, strlen(str2), 100);
+	  osDelay(500);
   }
   /* USER CODE END startLowTask */
 }

@@ -1,1 +1,4 @@
 1740322196135	Rename resource 'GPIO_OutputControl'
+1740411183962	Delete resource 'BinarySemaphoreExample'
+1740411270094	Delete resource 'GPIOOutputControl'
+1740411303790	Delete resource 'USARTWrite'
